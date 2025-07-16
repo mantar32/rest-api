@@ -25,6 +25,7 @@ public class CustomErrorController implements ErrorController {
         errorResponse.put("error", HttpStatus.valueOf(statusCode != null ? statusCode : HttpStatus.INTERNAL_SERVER_ERROR.value()).getReasonPhrase());
         errorResponse.put("message", errorMessage != null ? errorMessage : "An error occurred");
         errorResponse.put("path", requestUri != null ? requestUri : "unknown");
+
         
         return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(statusCode != null ? statusCode : HttpStatus.INTERNAL_SERVER_ERROR.value()));
     }

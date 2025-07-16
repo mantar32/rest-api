@@ -43,19 +43,24 @@ public class UserService {
                     user.setName(userDetails.getName());
                     user.setEmail(userDetails.getEmail());
                     user.setPhone(userDetails.getPhone());
-                    if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
+                    if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty())
+                    {
                         user.setPassword(userDetails.getPassword());
                     }
                     return userRepository.save(user);
                 })
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
     }
-    
-    public void deleteUser(String id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("User not found with id: " + id);
+    public class UserNotFoundException extends RuntimeException {
+        public UserNotFoundException(String id) {
+            super("User not found with id: " + id);
         }
+    }
+    public void deleteUser(String id) {
+       userRepository.findById(id)
+               .ifPresentOrElse(
+                       user -> userRepository.deleteById(id),
+                       () -> {throw new  UserNotFoundException( id);}
+               );
     }
 }

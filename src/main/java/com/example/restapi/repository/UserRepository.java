@@ -10,9 +10,11 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
     
-    Optional<User> findByEmail(String email);
-    
-    List<User> findByNameContainingIgnoreCase(String name);
+    Optional<User> findByEmail(String email); //Bu metodun amacı, veritabanındaki User tablosundan email adresine göre bir kullanıcıyı bulmaktır.
+
+
+
+    List<User> findByNameContainingIgnoreCase(String name); //Bu method, veritabanındaki User tablosunda adı belirli bir kelimeyi içeren tüm kullanıcıları bulmak için kullanılır.
     
     boolean existsByEmail(String email);
 }
