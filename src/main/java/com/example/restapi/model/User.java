@@ -2,10 +2,15 @@ package com.example.restapi.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDateTime;
 
 @Document(collection = "users")
 @Schema(description = "User entity")
@@ -22,12 +27,18 @@ public class User {
     
     @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
+    @Indexed(unique = true)
     @Schema(description = "User email", example = "john.doe@example.com", required = true)
     private String email;
     
-    @Size(min = 6, message = "Password must be at least 6 characters")
-    @Schema(description = "User password", example = "123456", required = true)
-    private String password;
+
+    @CreatedDate
+    @Schema(description = "Record creation date")
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Schema(description = "Record last modified date")
+    private LocalDateTime lastModifiedDate;
     
     @Schema(description = "User phone number", example = "555-1234")
     private String phone;
@@ -35,10 +46,9 @@ public class User {
     // Constructors
     public User() {}
     
-    public User(String name, String email, String password, String phone) {
+    public User(String name, String email, String phone) {
         this.name = name;
         this.email = email;
-        this.password = password;
         this.phone = phone;
     }
     
@@ -67,20 +77,28 @@ public class User {
         this.email = email;
     }
     
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
     public String getPhone() {
         return phone;
     }
     
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
     
     @Override

@@ -14,10 +14,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     
-    public List<User> getAllUsers() {
+    
+
+
+    public  List <User> getAllUsers () {
         return userRepository.findAll();
     }
-    
     public Optional<User> getUserById(String id) {
         return userRepository.findById(id);
     }
@@ -34,6 +36,7 @@ public class UserService {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
+
         return userRepository.save(user);
     }
     
@@ -43,10 +46,6 @@ public class UserService {
                     user.setName(userDetails.getName());
                     user.setEmail(userDetails.getEmail());
                     user.setPhone(userDetails.getPhone());
-                    if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty())
-                    {
-                        user.setPassword(userDetails.getPassword());
-                    }
                     return userRepository.save(user);
                 })
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));

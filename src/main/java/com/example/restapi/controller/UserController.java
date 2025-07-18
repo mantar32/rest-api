@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "User Management", description = "Kullanıcı yönetimi için API endpoint'leri")
 public class UserController {
     
